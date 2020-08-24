@@ -27,4 +27,4 @@ Finally the operator will have 7 options to choose from:
    
  * In order to make changes for another client run the program again.
  
- * instaBotMain.py first line: from InstaBot import IgBot - means that instaBotMain.py and igBot.py are placed together at the same folder named "InstaBot"
+ * instaBotMain.py first line: from InstaBot import IgBot - means that instaBotMain.py and igBot.py are placed together at the same folder.
