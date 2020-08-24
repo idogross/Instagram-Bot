@@ -21,7 +21,7 @@ class IgBot:
             save_info_options = WebDriverWait(self.driver, 10).until(EC.presence_of_element_located(
                 (By.CLASS_NAME, "sqdOP.yWX7d.y3zKF")))
             save_info_options.click()
-        except error.ElementClickInterceptedException:
+        except:
             return
 
     def login(self):
@@ -95,21 +95,20 @@ class IgBot:
             time.sleep(2)
         href = self.driver.find_elements_by_tag_name('a')
         posts = [elem.get_attribute('href') for elem in href if '.com/p/' in elem.get_attribute('href')]
-
         count = 0
         for post in posts:
             self.driver.get(post)
-            like_btn = self.driver.find_element_by_class_name("_8-yf5 ")
-            if like_btn.get_attribute('aria-label') == "Unlike":
-                count += 1
-                if count == 5:
+            maybe_like_btn = self.driver.find_elements_by_tag_name('svg')
+            for like_btn in maybe_like_btn:
+                if like_btn.get_attribute('aria-label') == "Unlike":
+                    count += 1
                     break
-                else:
-                    continue
-            else:
-                count = 0
-                like_btn.click()
-        print('All recent posts are liked!')
+                elif like_btn.get_attribute('aria-label') == "Like":
+                    count = 0
+                    like_btn.click()
+                    break
+            if count == 5:
+                break
         
     def check_unfollowers(self, last_checked_flwers):
         # this function can be executed only after login()
