@@ -142,7 +142,7 @@ class IgBot:
         self.driver.close()
         if len(last_checked_flwers) == 0:
             print('No previous followers check. Saving the current followers')
-            return usernames
+            return Series(usernames)
         else:
             names_copy = usernames.copy()
             recent_unfollowers = []
