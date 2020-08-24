@@ -98,9 +98,7 @@ class IgBotApp:
                         bot_password = getpass.getpass()
                         try:
                             bot_password = int(bot_password)
-                        finally:
                             bot = IgBot(driver, bot_username, bot_password)
-                        try:
                             bot.login()
                             bot_username_pd = Series([bot_username])
                             bot_pass_pd = Series([bot_password])
@@ -122,6 +120,7 @@ class IgBotApp:
                                        str(self.bots_dict['Password'][bot_index]))
                         bot.login()
                         bot.unfollow_client(self.client_bot_file)
+                        print('Bot removal was successful!')
                         self.bots_dict['Bot Name'] = self.bots_dict['Bot Name'].drop(bot_index)
                         self.bots_dict['Password'] = self.bots_dict['Password'].drop(bot_index)
                         self.bots_dict['Start Follow Time'] = self.bots_dict['Start Follow Time'].drop(bot_index)
@@ -133,7 +132,8 @@ class IgBotApp:
                 elif choice == 4:
                     bot_name_likes = input('Please enter bot\'s name you wish to like all client\'s posts\n')
                     if bot_name_likes not in self.bots_dict['Bot Name'].values:
-                        print('This bot does not follow the client! Please check the its name\n')
+                        print('This bot does not follow the client! Please check its name\n')
+                        continue
                     else:
                         bot_index = self.bots_dict['Bot Name'][self.bots_dict['Bot Name'] == bot_name_likes].index[0]
                         bot = IgBot(driver, self.bots_dict['Bot Name'][bot_index],
@@ -141,6 +141,7 @@ class IgBotApp:
                         bot.login()
                         bot.like_posts(self.client_bot_file)
                         print(f'All recent posts are liked by {bot_name_likes}')
+                        continue
 
                 elif choice == 5 or choice == 6:
                     if len(self.bots_dict['Bot Name']) > 0:
